@@ -44,10 +44,9 @@ Please remember to allow the Github users `richardfrankza` and `pixelbaste` to h
 Good luck!
 
 ### ToDo
-
-run composer install
-run php artisan migrate:fresh --seed 
-import the new postman collection (Zane Test)
-run collection
-marvel at 100% test results
-offer Job
+1) run composer install
+2) run php artisan migrate:fresh --seed 
+3) import the new postman collection (Zane Test)
+4) run collection
+5) marvel at 100% test results
+6) offer Job

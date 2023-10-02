@@ -16,7 +16,7 @@ class TodoListController extends Controller
      */
     public function index(Request $request)
     {
-        return TodoList::paginate();
+        return TodoList::where('user_id', "=", auth()->user()->id)->paginate();
     }
 
     /**
@@ -43,6 +43,7 @@ class TodoListController extends Controller
      */
     public function show(TodoList $todoList)
     {
+        $this->authorize('view', $todoList);
         return $todoList;
     }
 
@@ -67,7 +68,8 @@ class TodoListController extends Controller
      */
     public function destroy(TodoList $todoList)
     {
-        $todoList->delete();
-        return response()->json(['message' => 'success'], 200);
+      $this->authorize('delete', $todoList);
+      $todoList->delete();
+      return response()->json(['message' => 'success'], 200);
     }
 }

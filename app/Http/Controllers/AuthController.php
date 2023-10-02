@@ -35,7 +35,7 @@ class AuthController extends Controller
             ]
         );
     }
-
+    // public function register(Request $request)
     public function register(RegisterRequest $request)
     {
         $user = User::create(
@@ -45,17 +45,28 @@ class AuthController extends Controller
                 'password' => Hash::make($request->password),
             ]
         );
-
-        $token = Auth::login($user);
-        return response()->json(
-            [
-                'user' => $user,
-                'authorisation' => [
-                    'token' => $token,
-                    'type' => 'bearer',
-                ]
+        $user->assignRole('user');
+        $response = [];
+        $responseCode = 500;
+        if ($token = Auth::login($user)){
+          $response = [
+            'user' => $user,
+            'authorisation' => [
+                'token' => $token,
+                'type' => 'bearer',
             ]
-        );
+          ];
+          $responseCode = 201;
+        }else{
+          $response = [
+            'error' => 'unable to login user',
+            ];
+            $responseCode = 500;
+        }
+        return response()->json(
+          $response,
+          $responseCode
+      );
     }
 
     public function logout()

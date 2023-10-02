@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('todos', function (Blueprint $table) {
             $table->uuid('id')->unique();
-            $table->foreignUuid('list_id')->constrained('todo_lists');
+            $table->foreignUuid('list_id')->constrained('todo_lists')->onDelete('cascade');
             $table->string('title', 1023);
             $table->text('description');
             $table->enum('status', ['incomplete', 'complete'])->default('incomplete');

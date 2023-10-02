@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TodoListController;
+use App\Http\Controllers\JsonController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,7 +17,6 @@ use App\Http\Controllers\TodoListController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::controller(AuthController::class)->prefix('auth')->group(
     function () {
         Route::post('/login', 'login');
@@ -53,5 +53,12 @@ Route::controller(UserController::class)->prefix('users')->group(
     function () {
         Route::get('/', 'index');
     }
+);
+
+Route::controller(JsonController::class)->prefix('json/')->group(
+  function () {
+      Route::get('/', 'index');
+
+  }
 );
 

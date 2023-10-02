@@ -5,6 +5,9 @@ namespace App\Http\Requests;
 use App\Enum\Priority;
 use Illuminate\Validation\Rules\Enum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
 
 class StoreTodoRequest extends FormRequest
 {
@@ -31,5 +34,16 @@ class StoreTodoRequest extends FormRequest
             'priority'      => ['sometimes', new Enum(Priority::class)],
             'deadline'      => ['sometimes', 'nullable', 'after:now']
         ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+      $response = new JsonResponse(
+              [
+                  'message' => 'Validation has failed', 
+                  'errors' => $validator->errors()
+              ], 422);
+
+      throw new ValidationException($validator, $response);
     }
 }

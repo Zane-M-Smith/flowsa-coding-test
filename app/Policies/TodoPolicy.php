@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Todo;
+use App\Models\TodoList;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -53,7 +54,8 @@ class TodoPolicy
      */
     public function update(User $user, Todo $todo)
     {
-        return $user->hasPermissionTo('todo_update');
+      $todoList = $todo->todoList;
+      return $user->id === $todoList->user_id;
     }
 
     /**
@@ -64,8 +66,10 @@ class TodoPolicy
      * @return \Illuminate\Auth\Access\Response|bool
      */
     public function delete(User $user, Todo $todo)
+
     {
-        return $user->hasPermissionTo('todo_delete');
+      $todoList = $todo->todoList;
+      return $user->id === $todoList->user_id;
     }
 
     /**

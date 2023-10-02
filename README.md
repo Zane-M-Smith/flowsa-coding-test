@@ -42,3 +42,12 @@ Please update the Postman Environment to match any variable criteria (eg, `baseU
 Please remember to allow the Github users `richardfrankza` and `pixelbaste` to have access to this repo in order for us to review.
 
 Good luck!
+
+### ToDo
+
+run composer install
+run php artisan migrate:fresh --seed 
+import the new postman collection (Zane Test)
+run collection
+marvel at 100% test results
+offer Job

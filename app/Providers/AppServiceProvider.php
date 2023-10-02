@@ -3,6 +3,10 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\TodoList;
+use App\Observers\ToDoListObserver;
+use App\Models\Todo;
+use App\Observers\ToDoObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+      ToDoList::observe(ToDoListObserver::class);
+      ToDo::observe(ToDoObserver::class);
     }
 }

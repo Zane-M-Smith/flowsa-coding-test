@@ -30,7 +30,7 @@ class TodoListPolicy
      */
     public function view(User $user, TodoList $todoList)
     {
-        return $user->hasPermissionTo('lists_view');
+        return $user->id === $todoList->user_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class TodoListPolicy
      */
     public function delete(User $user, TodoList $todoList)
     {
-        return $user->hasPermissionTo('lists_delete');
+      return $user->id === $todoList->user_id;
     }
 
     /**

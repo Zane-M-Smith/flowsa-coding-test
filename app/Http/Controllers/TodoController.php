@@ -40,7 +40,6 @@ class TodoController extends Controller
     public function store(TodoList $todoList, StoreTodoRequest $request)
     {
         $this->authorize('add_todo', $todoList);
-
         $todo = new Todo($request->all());
         $todo->list_id = $todoList->id;
         $todo->save();
@@ -70,10 +69,13 @@ class TodoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(TodoList $todoList, UpdateTodoRequest $request, Todo $todo)
-    {
-        $todo->update($request->all());
-        $todo->setHidden(['todoList']);
-        return $todo;
+    { 
+          if($todo->list_id !== $todoList->id){
+            return response()->json(['error' => 'todo not in list.', 'message' => 'todo does not belong to list.'], 500);
+          }
+          $todo->update($request->all());
+          $todo->setHidden(['todoList']);
+          return $todo;
     }
 
     /**
@@ -84,6 +86,9 @@ class TodoController extends Controller
      */
     public function destroy(TodoList $todoList, Todo $todo)
     {
+      if($todo->list_id !== $todoList->id){
+        return response()->json(['error' => 'todo not in list.', 'message' => 'todo does not belong to list.'], 500);
+      }
         $todo->delete();
         return response()->json(['message' => 'success'], 200);
     }
